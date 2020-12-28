@@ -1,0 +1,85 @@
+{% extends "contest/base.html" %}
+{% block content %}
+    {% if posts %}
+        {% for post in posts %}
+            <article class="media content-section">
+              <div class="media-body">
+                <div class="article-metadata">
+                  <small class="mr-2">{{ post.company }}</small>
+                  <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                  <small class="mr-2"> - {{ post.frequency }}</small>
+                </div>
+                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+                  <img src="{{ post.image.url }}" style='height: 100%; width: 100%; object-fit: contain'>
+                <p class="article-content">{{ post.details }}</p>
+                <a href="{{ post.URL }}" target="_blank">{{ post.URL }}</a>
+                <p class="article-content">Regions Eligible: {% for region in post.regions %} {{ region }}, {% endfor %}</p>
+                  <p class="article-content">Contest Ends: {{ post.end_date|date:"D F d, Y P T" }} </p>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type='hidden' value='{{post.pk}}' name='contest'>
+                    <input type='hidden' value='{{user.pk}}' name='user'>
+                    <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit"><i class="fas fa-calendar-plus"></i> Add Contest</button>
+                </div>
+                </form>
+              </div>
+            </article>
+        {% endfor %}
+    {% else %}
+        <h3>There are currently no more contests to add</h3>
+
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">Another headline</h2>
+          <p class="lead">And an even wittier subheading.</p>
+        </div>
+        <div class="bg-dark box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+      <div class="bg-primary mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">Another headline</h2>
+          <p class="lead">And an even wittier subheading.</p>
+        </div>
+        <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">Another headline</h2>
+          <p class="lead">And an even wittier subheading.</p>
+        </div>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">Another headline</h2>
+          <p class="lead">And an even wittier subheading.</p>
+        </div>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+    </div>
+
+    <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+          <h2 class="display-5">Another headline</h2>
+          <p class="lead">And an even wittier subheading.</p>
+        </div>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+      <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 py-3">
+          <h2 class="display-5">Another headline</h2>
+          <p class="lead">And an even wittier subheading.</p>
+        </div>
+        <div class="bg-white box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+      </div>
+    </div>
+    {% endif %}
+{% endblock content %}

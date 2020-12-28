@@ -1,0 +1,1 @@
+web: gunicorn contest_website:contest_website.wsgi

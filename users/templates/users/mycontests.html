@@ -1,0 +1,95 @@
+{% extends "contest/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <h1>{{ user.username }}</h1>
+{% for user_contest in user_contests %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <small class="mr-2">{{ user_contest.contest.company }}</small>
+              <small class="text-muted">{{ user_contest.contest.date_posted|date:"F d, Y" }}</small>
+              <small class="mr-2"> - {{ user_contest.contest.frequency }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ user_contest.contest.title }}</a></h2>
+            <p class="article-content">{{ user_contest.details }}</p>
+            <a href="{{ user_contest.contest.URL }}" target="_blank">{{ user_contest.contest.URL }}</a>
+              <p class="article-content">{{ user_contest.contest.details }} </p>
+              <p class="article-content">Contest Ends: {{ user_contest.contest.end_date|date:"D F d, Y P T" }} </p>
+              <p class="article-content">You have {{ user_contest.entries }} total entries </p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type='hidden' value='{{user_contest.pk}}' name='usercontest'>
+                <input type='hidden' value='{{user.pk}}' name='user'>
+                <div class="form-group">
+                <button class="btn btn-outline-success" type="submit">I entered today</button>
+            </div>
+            </form>
+          </div>
+        </article>
+{% endfor %}
+
+
+<h1><i class="far fa-calendar-check"></i> Already Entered</h1>
+{% for en in entered %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <small class="mr-2">{{ en.contest.company }}</small>
+              <small class="text-muted">{{ en.contest.date_posted|date:"F d, Y" }}</small>
+              <small class="mr-2"> - {{ en.contest.frequency }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ en.contest.title }}</a></h2>
+            <p class="article-content">{{ en.contest.details }}</p>
+            <a href="{{ en.contest.URL }}" target="_blank">{{ en.contest.URL }}</a>
+              <p class="article-content">
+                  <strong>Contest Ends: {{ en.contest.end_date|date:"D F d, Y P T" }}</strong>
+              </p>
+              <p class="article-content">You have {{ en.entries }} total entries </p>
+
+
+                <div class="form-group">
+                <button class="btn btn-secondary btn" disabled>Already Entered</button>
+            </div>
+
+          </div>
+        </article>
+
+
+
+
+    {% endfor %}
+
+
+<h1><i class="fas fa-calendar-minus"></i> Expired</h1>
+{% for ex in expired %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <small class="mr-2">{{ ex.contest.company }}</small>
+              <small class="text-muted">{{ ex.contest.date_posted|date:"F d, Y" }}</small>
+              <small class="mr-2"> - {{ ex.contest.frequency }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ ex.contest.title }}</a></h2>
+            <p class="article-content">{{ ex.contest.details }}</p>
+            <a href="{{ ex.contest.URL }}" target="_blank">{{ ex.contest.URL }}</a>
+              <p class="article-content">
+                  <strong>Contest Ended: {{ ex.contest.end_date|date:"D F d, Y P T" }}</strong>
+              </p>
+              <p class="article-content">You have {{ ex.entries }} total entries </p>
+
+
+                <div class="form-group">
+                <button class="btn btn-secondary btn" disabled>Contest Has Ended</button>
+            </div>
+
+          </div>
+        </article>
+
+
+
+
+    {% endfor %}
+{% endblock content %}
+
